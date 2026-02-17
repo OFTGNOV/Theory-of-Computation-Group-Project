@@ -1,5 +1,7 @@
-# 📘 Project Summary: Syntax Checker for a Simple Programming Language  
+# 📘 Project Summary: Syntax Checker for a Simple Programming Language
+
 ## **Shared Google Doc**
+https://docs.google.com/document/d/1Vo84mNwzQJyHcHB37taEUTl-1Pb8Ji4hm1PTv383FNk/edit?usp=sharing
 
 ## **What We Are Creating**
 - A **syntax checker** for a small, well-defined programming language.  
