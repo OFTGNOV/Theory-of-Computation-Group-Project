@@ -1,12 +1,13 @@
-## 📘 Project Summary: Syntax Checker for a Simple Programming Language  
+# 📘 Project Summary: Syntax Checker for a Simple Programming Language  
+## **Shared Google Doc**
 
-### **What We Are Creating**
+## **What We Are Creating**
 - A **syntax checker** for a small, well-defined programming language.  
 - Built using **Context-Free Grammars (CFGs)** and parsing techniques.  
 - Designed to validate whether input programs/documents are syntactically correct.  
 - Mirrors real-world applications in **compiler design, interpreters, IDEs, and markup validators**.  
 
-### **Expectations**
+## **Expectations**
 - Work in **groups of 3–4 students** (no individual submissions).  
 - Demonstrate mastery of **Theory of Computation concepts**, including:
   - Grammar design (terminals, non-terminals, production rules).  
@@ -19,7 +20,7 @@
   - Provide meaningful syntax error messages.  
   - Document theoretical principles clearly.  
 
-### **Deliverables**
+## **Deliverables**
 1. **Grammar Specification**  
    - Terminals, non-terminals, production rules, start symbol.  
    - Ambiguity discussion with examples.  
@@ -46,14 +47,14 @@
    - Demonstrate syntax checker.  
    - Answer theoretical and implementation questions.  
 
-### **Assessment Criteria**
+## **Assessment Criteria**
 - Grammar accuracy and completeness (25%).  
 - Parser correctness and robustness (30%).  
 - Theoretical justification (ambiguity, CNF, parsing) (25%).  
 - Report quality and test cases (15%).  
 - Interview/presentation (5%).  
 
-### **Important Notes**
+## **Important Notes**
 - **No automatic parser generators** (e.g., ANTLR, YACC, Bison).  
 - External libraries allowed only for basic tasks (must be documented).  
 - Strict adherence to academic regulations (plagiarism rules apply).  
