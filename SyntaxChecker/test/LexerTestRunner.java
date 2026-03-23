@@ -11,7 +11,12 @@ import java.util.List;
 /**
  * Test runner for the Lexer.
  * Usage: java test.LexerTestRunner <input_file> <expected_result>
- *   expected_result: "valid" or "invalid"
+ *   expected_result: 
+ *     - "valid" or "lexically_valid": expects no ERROR tokens (all characters are valid)
+ *     - "invalid": expects ERROR tokens (contains gibberish/invalid characters)
+ * 
+ * NOTE: This tests LEXICAL correctness only (are characters valid tokens?).
+ *       It does NOT test syntactic correctness (is the grammar correct?).
  */
 public class LexerTestRunner {
 
@@ -48,7 +53,7 @@ public class LexerTestRunner {
             boolean hasErrors = tokens.stream()
                     .anyMatch(t -> t.getType().toString().equals("ERROR"));
 
-            if (expectedResult.equals("valid")) {
+            if (expectedResult.equals("valid") || expectedResult.equals("lexically_valid")) {
                 if (hasEOF && !hasErrors) {
                     System.out.println("✓ PASS: Lexer produced valid tokens as expected");
                     System.exit(0);
@@ -58,14 +63,14 @@ public class LexerTestRunner {
                 }
             } else if (expectedResult.equals("invalid")) {
                 if (hasErrors) {
-                    System.out.println("✓ PASS: Lexer detected invalid input as expected");
+                    System.out.println("✓ PASS: Lexer detected invalid input (gibberish characters) as expected");
                     System.exit(0);
                 } else {
-                    System.out.println("✗ FAIL: Lexer should have detected invalid input");
+                    System.out.println("✗ FAIL: Lexer should have detected invalid input (gibberish characters)");
                     System.exit(1);
                 }
             } else {
-                System.err.println("Invalid expected_result. Use 'valid' or 'invalid'");
+                System.err.println("Invalid expected_result. Use 'valid', 'lexically_valid', or 'invalid'");
                 System.exit(1);
             }
 

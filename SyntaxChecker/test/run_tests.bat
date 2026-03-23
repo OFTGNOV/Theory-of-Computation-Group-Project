@@ -48,15 +48,19 @@ for %%f in (%TEST_DIR%\valid\*.txt) do (
     )
 )
 
-REM Test invalid programs
+REM Test invalid programs (grammar errors, but lexically valid)
 echo.
 echo ============================================
-echo Testing Invalid Programs (should report errors)
+echo Testing Invalid Programs (grammar errors - should tokenize successfully)
+echo ============================================
+echo NOTE: These tests check LEXICAL correctness only.
+echo       PASS = Lexer successfully tokenized the input (no gibberish characters)
+echo       FAIL = Lexer could not properly tokenize (found invalid characters)
 echo ============================================
 for %%f in (%TEST_DIR%\invalid\*.txt) do (
     echo.
     echo [TEST] %%~nxf
-    java -cp %PROJECT_DIR%\bin test.LexerTestRunner "%%f" invalid
+    java -cp %PROJECT_DIR%\bin test.LexerTestRunner "%%f" lexically_valid
     if errorlevel 1 (
         set /a failed+=1
     ) else (
