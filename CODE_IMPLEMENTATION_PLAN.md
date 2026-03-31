@@ -1,9 +1,11 @@
 # Parser Implementation Plan - Simple Assignment Statements
+
 ## Beginner-Friendly Guide with Examples
 
 ---
 
 ## Table of Contents
+
 1. [Key Terms Dictionary](#key-terms-dictionary)
 2. [Big Picture Overview](#big-picture-overview)
 3. [Grammar Explained Simply](#grammar-explained-simply)
@@ -19,45 +21,45 @@
 
 ### Core Concepts
 
-| Term | Simple Definition | Example |
-|------|-------------------|---------|
-| **Parser** | A program that reads code and checks if it follows the rules | Reads "x = 5;" and says "yes, this is valid" |
-| **Token** | The smallest piece of code (like a word) | "x", "=", "5", ";" are each a token |
-| **Lexer** | A program that breaks code into tokens | Turns "x=5;" into ["x", "=", "5", ";"] |
-| **Grammar** | The rules that say what code is allowed | "An assignment needs: identifier = expression ;" |
-| **Parse Tree** | A diagram showing how code follows the rules | Visual tree showing the structure |
-| **Syntax Error** | Code that breaks the grammar rules | "x = 5" (missing semicolon) |
+| Term             | Simple Definition                                            | Example                                          |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------ |
+| **Parser**       | A program that reads code and checks if it follows the rules | Reads "x = 5;" and says "yes, this is valid"     |
+| **Token**        | The smallest piece of code (like a word)                     | "x", "=", "5", ";" are each a token              |
+| **Lexer**        | A program that breaks code into tokens                       | Turns "x=5;" into ["x", "=", "5", ";"]           |
+| **Grammar**      | The rules that say what code is allowed                      | "An assignment needs: identifier = expression ;" |
+| **Parse Tree**   | A diagram showing how code follows the rules                 | Visual tree showing the structure                |
+| **Syntax Error** | Code that breaks the grammar rules                           | "x = 5" (missing semicolon)                      |
 
 ### Parser Components
 
-| Term | What It Does | Think Of It As |
-|------|--------------|-----------------|
-| **Lexer** | Splits input into tokens | A word-breaker (tokenizer) |
-| **Parser** | Checks if tokens follow grammar | A rule-checker |
-| **Node** | A piece of the parse tree | A box in the tree diagram |
-| **Error Reporter** | Collects and shows errors | A message collector |
-| **Symbol** | A word/number in the grammar | Like a variable name |
+| Term               | What It Does                    | Think Of It As             |
+| ------------------ | ------------------------------- | -------------------------- |
+| **Lexer**          | Splits input into tokens        | A word-breaker (tokenizer) |
+| **Parser**         | Checks if tokens follow grammar | A rule-checker             |
+| **Node**           | A piece of the parse tree       | A box in the tree diagram  |
+| **Error Reporter** | Collects and shows errors       | A message collector        |
+| **Symbol**         | A word/number in the grammar    | Like a variable name       |
 
 ### Grammar Terminology
 
-| Term | Meaning | Example |
-|------|---------|---------|
-| **Non-terminal** | A rule name (can be broken down) | "Expression" (can become a+b) |
-| **Terminal** | An actual token (can't be broken down) | "5" or "x" or ";" |
-| **Production** | A rule showing what can become what | `Expression ::= Term '+' Term` |
-| **Epsilon (ε)** | "nothing" or "empty" | An assignment can be empty |
-| **Left-associative** | Evaluated left to right | (a + b) + c not a + (b + c) |
-| **Precedence** | Which operator to do first | * before + (so 2+3*4 = 2+12) |
+| Term                 | Meaning                                | Example                        |
+| -------------------- | -------------------------------------- | ------------------------------ |
+| **Non-terminal**     | A rule name (can be broken down)       | "Expression" (can become a+b)  |
+| **Terminal**         | An actual token (can't be broken down) | "5" or "x" or ";"              |
+| **Production**       | A rule showing what can become what    | `Expression ::= Term '+' Term` |
+| **Epsilon (ε)**      | "nothing" or "empty"                   | An assignment can be empty     |
+| **Left-associative** | Evaluated left to right                | (a + b) + c not a + (b + c)    |
+| **Precedence**       | Which operator to do first             | * before + (so 2+3*4 = 2+12)   |
 
 ### Recursive Descent Specific
 
-| Term | What It Means | Why It Matters |
-|------|---------------|-----------------|
-| **Recursive** | A method calls itself | Allows nested structures |
-| **Descent** | Going down the grammar rules | Starting from big rules, going to small ones |
-| **Call Stack** | The list of active method calls | Shows which rule we're currently parsing |
-| **Backtracking** | Going back to try something else | Peek ahead without consuming token |
-| **Synchronization** | Recovering from an error | Skip to next safe point (like semicolon) |
+| Term                | What It Means                    | Why It Matters                               |
+| ------------------- | -------------------------------- | -------------------------------------------- |
+| **Recursive**       | A method calls itself            | Allows nested structures                     |
+| **Descent**         | Going down the grammar rules     | Starting from big rules, going to small ones |
+| **Call Stack**      | The list of active method calls  | Shows which rule we're currently parsing     |
+| **Backtracking**    | Going back to try something else | Peek ahead without consuming token           |
+| **Synchronization** | Recovering from an error         | Skip to next safe point (like semicolon)     |
 
 ---
 
@@ -66,6 +68,7 @@
 ### What We're Building
 
 Think of it like building a **spell checker**:
+
 - **Regular spell checker**: Checks if words are spelled right
 - **Our parser**: Checks if code follows grammar rules
 
@@ -82,17 +85,20 @@ INPUT CODE         LEXER           TOKENS          PARSER          PARSE TREE
 ### Simple Example
 
 **Input Code:**
+
 ```
 x = 5;
 ```
 
 **What Lexer Does:**
+
 - Sees "x" → token: IDENTIFIER
 - Sees "=" → token: ASSIGN
 - Sees "5" → token: NUMBER
 - Sees ";" → token: SEMICOLON
 
 **What Parser Does:**
+
 - Checks: "Is there an identifier?" ✓ (x)
 - Checks: "Is there an equals sign?" ✓ (=)
 - Checks: "Is there an expression?" ✓ (5)
@@ -100,6 +106,7 @@ x = 5;
 - Result: "This is valid!"
 
 **Parse Tree Created:**
+
 ```
          Program
            │
@@ -115,9 +122,11 @@ x = 5;
 ### What is a Grammar?
 
 A grammar is like a recipe. A recipe says:
+
 - "A cake needs: flour + eggs + sugar + heat"
 
 Our grammar says:
+
 - "An assignment needs: identifier + equals + expression + semicolon"
 
 ### Our Complete Grammar
@@ -136,39 +145,47 @@ Number      ::= [0-9]+
 ### Breaking It Down Line By Line
 
 **Line 1: `Program ::= Statement`**
+
 - "A program is made of a statement"
 - Think: A program is one assignment
 
 **Line 2: `Statement ::= Assignment | ε`**
+
 - "A statement is either an assignment OR nothing"
 - The `|` means "or"
 - The `ε` means "empty/nothing"
 
 **Line 3: `Assignment ::= Identifier '=' Expression ';'`**
+
 - "An assignment is: a name = something ;"
 - Examples: `x = 5;` or `result = a + b;`
 
 **Line 4: `Expression ::= Term (('+' | '-') Term)*`**
+
 - "An expression is: term + term + term... (any number of terms with + or -)"
 - The `*` means "zero or more times"
 - Example: `2 + 3` or `5 + 6 - 7` or just `5`
 
 **Line 5: `Term ::= Factor (('*' | '/') Factor)*`**
+
 - "A term is: factor * factor * factor... (any number of factors with * or /)"
 - Similar to expression but for multiplication/division
 - Example: `3 * 4` or `8 * 2 / 4` or just `8`
 
 **Line 6: `Factor ::= Number | Identifier | '(' Expression ')'`**
+
 - "A factor is either a number, a variable name, or a parenthesized expression"
 - Examples: `5` or `x` or `(2 + 3)`
 
 **Lines 7-8: Identifiers and Numbers**
+
 - "Identifier is letters/underscores followed by letters/digits/underscores"
 - "Number is just digits"
 
 ### Real Examples Using This Grammar
 
 **Example 1: Simple assignment**
+
 ```
 Code: x = 5;
 
@@ -180,6 +197,7 @@ x        ← Identifier (valid: letter)
 ```
 
 **Example 2: Addition**
+
 ```
 Code: y = 10 + 20;
 
@@ -194,6 +212,7 @@ y        ← Identifier
 ```
 
 **Example 3: Complex with precedence**
+
 ```
 Code: z = 2 + 3 * 4;
 
@@ -262,6 +281,7 @@ project/
 ### The Big Three Steps
 
 #### Step 1: Lexing (Tokenization)
+
 ```
 Raw input: "x = 5;"
 
@@ -278,6 +298,7 @@ Output: List of tokens
 ```
 
 #### Step 2: Parsing (Checking Rules)
+
 ```
 Tokens: [IDENTIFIER, ASSIGN, NUMBER, SEMICOLON]
 
@@ -291,6 +312,7 @@ Parser checks grammar rules:
 ```
 
 #### Step 3: Building the Parse Tree
+
 ```
 As we check rules, we build a tree:
 
@@ -499,6 +521,7 @@ ParseError error = new ParseError(
 **What it does:** Collects multiple errors and displays them nicely
 
 **Why we need it:**
+
 - Parser can continue after finding one error
 - Show the user ALL errors at once
 - Not just the first error
@@ -569,6 +592,7 @@ ParseTree.Node factor() {
 ```
 
 **Examples:**
+
 ```
 factor() on "5"      → returns Node(NUMBER, "5")
 factor() on "x"      → returns Node(IDENTIFIER, "x")
@@ -604,6 +628,7 @@ ParseTree.Node term() {
 ```
 
 **Step-by-step example: Parsing "3 * 4"**
+
 ```
 Tokens: [NUMBER(3), MUL(*), NUMBER(4)]
 
@@ -717,6 +742,7 @@ ParseTree.Node assignment() {
 ```
 
 **Example: Parsing "x = 5;"**
+
 ```
 Step 1: See IDENTIFIER "x" ✓
 Step 2: See ASSIGN "=" ✓
@@ -883,6 +909,7 @@ Assignment
 **Input:** `x = 5;`
 
 **Expected Output:**
+
 ```
 PARSING SUCCESSFUL!
 
@@ -893,6 +920,7 @@ Assignment
 ```
 
 **Manual check:**
+
 - ✓ Identifier "x" found
 - ✓ Equals "=" found
 - ✓ Number "5" found
@@ -903,6 +931,7 @@ Assignment
 **Input:** `result = 10 + 20;`
 
 **Expected Output:**
+
 ```
 PARSING SUCCESSFUL!
 
@@ -919,6 +948,7 @@ Assignment
 **Input:** `y = 2 + 3 * 4;`
 
 **Expected Output:**
+
 ```
 PARSING SUCCESSFUL!
 
@@ -939,6 +969,7 @@ Assignment
 **Input:** `x = 5`
 
 **Expected Output:**
+
 ```
 PARSING FAILED
 
@@ -954,6 +985,7 @@ Total errors: 1
 **Input:** `x 5;`
 
 **Expected Output:**
+
 ```
 PARSING FAILED
 
@@ -969,6 +1001,7 @@ Total errors: 1
 **Input:** `temp = (2 + 3) * 4;`
 
 **Expected Output:**
+
 ```
 PARSING SUCCESSFUL!
 
@@ -983,6 +1016,7 @@ Assignment
 ```
 
 **Why it works:**
+
 - `(2+3)` gets parsed as a factor (the parentheses make it tight)
 - Then it multiplies with 4
 - Result: (2+3)*4 = 5*4, NOT 2+3*4 ✓
@@ -1007,21 +1041,24 @@ java Main test.txt
 ## Implementation Checklist
 
 ### Phase 1: Build Token & Lexer
-- [ ] Create Token class with enum TokenType
-- [ ] Implement getters for type, value, line, column
-- [ ] Create Lexer class
-- [ ] Implement nextToken() - reads and classifies tokens
-- [ ] Test: Lexer correctly breaks up "x = 5"
-- [ ] Test: Lexer handles multi-digit numbers "123"
-- [ ] Test: Lexer handles identifiers "result"
+
+- [x] Create Token class with enum TokenType
+- [x] Implement getters for type, value, line, column
+- [x] Create Lexer class
+- [x] Implement nextToken() - reads and classifies tokens
+- [x] Test: Lexer correctly breaks up "x = 5"
+- [x] Test: Lexer handles multi-digit numbers "123"
+- [x] Test: Lexer handles identifiers "result"
 
 ### Phase 2: Build Support Classes
+
 - [ ] Create ParseTree.Node class
 - [ ] Implement addChild() and print() methods
 - [ ] Create ParseError class
 - [ ] Create ErrorReporter class
 
 ### Phase 3: Build Parser Skeleton
+
 - [ ] Create Parser class
 - [ ] Implement helper methods: advance(), match()
 - [ ] Create all grammar methods as stubs:
@@ -1033,6 +1070,7 @@ java Main test.txt
   - [ ] factor()
 
 ### Phase 4: Implement Parser
+
 - [ ] Implement factor() first (simplest)
 - [ ] Test factor() with: "5", "x", "(3)"
 - [ ] Implement term()
@@ -1043,6 +1081,7 @@ java Main test.txt
 - [ ] Implement statement() and program()
 
 ### Phase 5: Integration
+
 - [ ] Create Main.java
 - [ ] Test with valid programs
 - [ ] Test with invalid programs
@@ -1054,6 +1093,7 @@ java Main test.txt
 ## Common Mistakes & How to Fix Them
 
 ### Mistake 1: Forgetting to Advance Token
+
 ```java
 // ❌ WRONG - Infinite loop!
 if (currentToken.getType() == IDENTIFIER) {
@@ -1068,6 +1108,7 @@ if (currentToken.getType() == IDENTIFIER) {
 ```
 
 ### Mistake 2: Wrong Precedence
+
 ```java
 // ❌ WRONG - expression() calls expression() directly
 // This causes infinite recursion
@@ -1082,6 +1123,7 @@ expression() {
 ```
 
 ### Mistake 3: Not Handling EOF
+
 ```java
 // ❌ WRONG - Crashes at end of file
 while (currentToken is not something) {
@@ -1095,6 +1137,7 @@ while (currentToken.getType() != EOF) {
 ```
 
 ### Mistake 4: Building Tree Wrong
+
 ```java
 // ❌ WRONG - Tree nodes with nothing
 assignmentNode.addChild(new Node("="));
@@ -1163,15 +1206,15 @@ For "x = 5 + 3 * 2;"
 
 ## Summary Table
 
-| Component | Purpose | Key Method |
-|-----------|---------|-----------|
-| Token.java | Represents one lexeme | getType(), getValue() |
-| Lexer.java | Breaks code into tokens | nextToken() |
-| ParseTree.java | Stores hierarchical structure | addChild(), print() |
-| ParseError.java | Stores error information | toString() |
-| ErrorReporter.java | Collects all errors | addError(), printErrors() |
-| Parser.java | Checks grammar rules | parse(), assignment(), expression(), etc. |
-| Main.java | Runs everything | main() |
+| Component          | Purpose                       | Key Method                                |
+| ------------------ | ----------------------------- | ----------------------------------------- |
+| Token.java         | Represents one lexeme         | getType(), getValue()                     |
+| Lexer.java         | Breaks code into tokens       | nextToken()                               |
+| ParseTree.java     | Stores hierarchical structure | addChild(), print()                       |
+| ParseError.java    | Stores error information      | toString()                                |
+| ErrorReporter.java | Collects all errors           | addError(), printErrors()                 |
+| Parser.java        | Checks grammar rules          | parse(), assignment(), expression(), etc. |
+| Main.java          | Runs everything               | main()                                    |
 
 ---
 
