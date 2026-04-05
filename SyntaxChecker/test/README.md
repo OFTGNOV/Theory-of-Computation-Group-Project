@@ -5,7 +5,7 @@ This directory contains test files and scripts for testing the **Lexer** and **P
 ## Directory Structure
 
 ```
-test/
+est/
 ├── inputs/
 │   ├── valid/          # Test cases that should pass (10 files)
 │   │   ├── test01_simple_assignment.txt
@@ -31,8 +31,6 @@ test/
 │       └── test10_invalid_character.txt
 ├── LexerTestRunner.java    # Lexer test runner with interactive menu
 ├── README.md               # This file
-├── run_tests.bat           # Windows test runner script
-└── run_tests.sh            # Unix/Linux/Mac test runner script
 ```
 
 ## Running the Tests
@@ -48,13 +46,14 @@ java -cp SyntaxChecker/bin test.LexerTestRunner
 ```
 
 **Menu Options:**
+
 1. **Run all valid test cases** - Tests all 10 valid test files
 2. **Run all invalid test cases** - Tests all 10 invalid test files
 3. **Run all test cases** - Runs both valid and invalid tests
 4. **Run a specific valid test case** - Select from numbered list
 5. **Run a specific invalid test case** - Select from numbered list
 6. **Run a custom input file** - Enter your own file path
-0. **Exit**
+7. **Exit**
 
 #### **Full Syntax Checker (Parser)**
 
@@ -63,13 +62,14 @@ java -cp SyntaxChecker/bin main.Main
 ```
 
 **Menu Options:**
+
 1. **Run all valid test cases** - Parses all 10 valid test files
 2. **Run all invalid test cases** - Parses all 10 invalid test files
 3. **Run all test cases** - Runs both valid and invalid tests
 4. **Run a specific valid test case** - Select from numbered list (with trace option)
 5. **Run a specific invalid test case** - Select from numbered list (with trace option)
 6. **Run a custom input file** - Enter your own file path (with trace option)
-0. **Exit**
+7. **Exit**
 
 ### **Direct Mode** (For scripting/automation)
 
@@ -82,10 +82,12 @@ java -cp SyntaxChecker/bin test.LexerTestRunner <input_file> <expected_result>
 ```
 
 Where `<expected_result>` is either:
+
 - `valid` or `lexically_valid` - expects no ERROR tokens
 - `invalid` - expects ERROR tokens
 
 **Example:**
+
 ```bash
 java -cp SyntaxChecker/bin test.LexerTestRunner SyntaxChecker/test/inputs/valid/test01_simple_assignment.txt valid
 ```
@@ -97,10 +99,12 @@ java -cp SyntaxChecker/bin main.Main <input_file> [--trace]
 ```
 
 Where:
+
 - `<input_file>` - Path to the source file to parse
 - `--trace` (optional) - Enable parsing trace output for debugging
 
 **Examples:**
+
 ```bash
 # Check a valid program
 java -cp SyntaxChecker/bin main.Main SyntaxChecker/test/inputs/valid/test01_simple_assignment.txt
@@ -112,22 +116,7 @@ java -cp SyntaxChecker/bin main.Main SyntaxChecker/test/inputs/valid/test03_prec
 java -cp SyntaxChecker/bin main.Main SyntaxChecker/test/inputs/invalid/test01_missing_semicolon.txt
 ```
 
-### **Batch Test Scripts**
-
-For running all tests automatically:
-
-**Windows:**
-```batch
-SyntaxChecker\test\run_tests.bat
-```
-
-**Unix/Linux/Mac:**
-```bash
-chmod +x SyntaxChecker/test/run_tests.sh
-./SyntaxChecker/test/run_tests.sh
-```
-
-## Test Cases
+#### Test Cases
 
 ### Valid Programs (10 tests)
 
@@ -135,16 +124,16 @@ These files contain syntactically correct assignment statements that should be *
 
 | Test File                             | Description                     | Input                    | Expected Result |
 | ------------------------------------- | ------------------------------- | ------------------------ | --------------- |
-| test01_simple_assignment.txt          | Simple assignment               | `x = 5;`                 | ✅ PASS         |
-| test02_addition.txt                   | Addition expression             | `result = 10 + 20;`      | ✅ PASS         |
-| test03_precedence.txt                 | Operator precedence             | `y = 2 + 3 * 4;`         | ✅ PASS         |
-| test04_parentheses.txt                | Parentheses override precedence | `temp = (2 + 3) * 4;`    | ✅ PASS         |
-| test05_subtraction_division.txt       | Subtraction and division        | `a = 10 - 4 / 2;`        | ✅ PASS         |
-| test06_complex_expression.txt         | Complex expression              | `z = a + b * c - d / e;` | ✅ PASS         |
-| test07_nested_parentheses.txt         | Nested parentheses              | `x = ((1 + 2) * 3) + 4;` | ✅ PASS         |
-| test08_identifier_with_underscore.txt | Identifier with underscore      | `my_var = 100;`          | ✅ PASS         |
-| test09_multi_digit_number.txt         | Multi-digit number              | `value = 12345;`         | ✅ PASS         |
-| test10_all_operators.txt              | All operators                   | `x = 1 + 2 - 3 * 4 / 5;` | ✅ PASS         |
+| test01_simple_assignment.txt          | Simple assignment               | `x = 5;`                 | ✅ PASS          |
+| test02_addition.txt                   | Addition expression             | `result = 10 + 20;`      | ✅ PASS          |
+| test03_precedence.txt                 | Operator precedence             | `y = 2 + 3 * 4;`         | ✅ PASS          |
+| test04_parentheses.txt                | Parentheses override precedence | `temp = (2 + 3) * 4;`    | ✅ PASS          |
+| test05_subtraction_division.txt       | Subtraction and division        | `a = 10 - 4 / 2;`        | ✅ PASS          |
+| test06_complex_expression.txt         | Complex expression              | `z = a + b * c - d / e;` | ✅ PASS          |
+| test07_nested_parentheses.txt         | Nested parentheses              | `x = ((1 + 2) * 3) + 4;` | ✅ PASS          |
+| test08_identifier_with_underscore.txt | Identifier with underscore      | `my_var = 100;`          | ✅ PASS          |
+| test09_multi_digit_number.txt         | Multi-digit number              | `value = 12345;`         | ✅ PASS          |
+| test10_all_operators.txt              | All operators                   | `x = 1 + 2 - 3 * 4 / 5;` | ✅ PASS          |
 
 ### Invalid Programs (10 tests)
 
@@ -168,11 +157,13 @@ These files contain syntax errors that should be **detected and reported** by th
 ### For Valid Tests
 
 **Lexer:**
+
 - Produces a sequence of valid tokens
 - Final token is EOF
 - No ERROR tokens are produced
 
 **Parser:**
+
 - Successfully builds a parse tree
 - No errors reported
 - Parse tree can be printed showing the hierarchical structure
@@ -180,10 +171,12 @@ These files contain syntax errors that should be **detected and reported** by th
 ### For Invalid Tests
 
 **Lexer Errors:**
+
 - Invalid characters (e.g., `@`, `#`, `$`) produce ERROR tokens
 - Tokenization continues after errors to find all issues
 
 **Parser Errors:**
+
 - Missing required tokens (e.g., `=`, `;`, identifiers)
 - Incomplete expressions
 - Mismatched parentheses
@@ -218,6 +211,7 @@ These files contain syntax errors that should be **detected and reported** by th
 ### Batch Testing
 
 Both test runners support batch mode that:
+
 - Runs all tests in a category automatically
 - Shows pass/fail summary with counts
 - Displays individual results for detailed inspection
