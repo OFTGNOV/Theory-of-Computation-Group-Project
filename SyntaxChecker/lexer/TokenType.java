@@ -1,3 +1,7 @@
+/**
+ * Oshane Valentine
+ * March 23, 2026
+ */
 package lexer;
 
 /**
